@@ -1,34 +1,14 @@
-<!-- <h1>Barcode</h1>
-<barcode-scanner-livestream
-  type="code_128"
-  maxWidth="400px"
-  (valueChanges)="onValueChanges($event)"
-  (started)="onStarted($event)"
-></barcode-scanner-livestream>
-
-<button (click)="restart()">Restart</button> -->
-<div *ngIf="barcodeValue">
-  {{ barcodeValue }}
-</div>
+<h1>Barcode scanner</h1>
 <div id="scanner-container">
   <!-- QuaggaJS will populate this element -->
 </div>
-
-<div class="controls">
-  <!-- <form>
-    <input id="acceptAnyCode" type="checkbox" [(ngModel)]="acceptAnyCode" name="acceptAnyCode" required/>
-    <label for="acceptAnyCode">Accept any code</label>
-    &nbsp;
-    <button (click)="clearCart()">Clear cart</button>
-  </form> -->
+<div *ngIf="errorMessage">
+  {{ errorMessage }}
+</div>
+<div *ngIf="barcodeValue">
+  {{ barcodeValue }}
 </div>
 
-<div class="shopping-cart">
-  <ng-template #shoppingCartItems>
-    <!-- <app-shopping-cart-item
-      *ngFor="let articleAndCount of items"
-      [article]="articleAndCount[0]"
-      [count]="articleAndCount[1]">
-    </app-shopping-cart-item> -->
-  </ng-template>
+<div class="controls" *ngIf="!started && barcodeValue">
+  <button (click)="initializeScanner()">New Scan</button>
 </div>
