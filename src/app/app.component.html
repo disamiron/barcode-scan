@@ -10,7 +10,7 @@
     {{ barcodeValue }}
   </div>
 
-  <div class="controls">
+  <div class="controls" *ngIf="!started && barcodeValue">
     <button (click)="initializeScanner()">New Scan</button>
   </div>
 </div>

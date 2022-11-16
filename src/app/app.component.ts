@@ -84,6 +84,7 @@ export class AppComponent implements AfterViewInit {
           this.started = false;
         } else {
           Quagga.start();
+          this.barcodeValue = null;
           this.started = true;
           this.changeDetectorRef.detectChanges();
           Quagga.onDetected((res) => {
