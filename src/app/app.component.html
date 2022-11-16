@@ -1,1 +1,8 @@
 <h1>Barcode</h1>
+<barcode-scanner-livestream
+  type="code_128"
+  (valueChanges)="onValueChanges($event)"
+></barcode-scanner-livestream>
+<div *ngIf="barcodeValue">
+  {{ barcodeValue }}
+</div>
