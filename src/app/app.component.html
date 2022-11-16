@@ -1,14 +1,16 @@
-<h1>Barcode scanner</h1>
-<div id="scanner-container">
-  <!-- QuaggaJS will populate this element -->
-</div>
-<div *ngIf="errorMessage">
-  {{ errorMessage }}
-</div>
-<div *ngIf="barcodeValue">
-  {{ barcodeValue }}
-</div>
+<div class="app">
+  <h1>Barcode scanner</h1>
+  <div id="scanner-container">
+    <!-- QuaggaJS will populate this element -->
+  </div>
+  <div *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+  <div *ngIf="barcodeValue">
+    {{ barcodeValue }}
+  </div>
 
-<div class="controls" *ngIf="!started && barcodeValue">
-  <button (click)="initializeScanner()">New Scan</button>
+  <div class="controls">
+    <button (click)="initializeScanner()">New Scan</button>
+  </div>
 </div>
