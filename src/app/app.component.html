@@ -1,8 +1,8 @@
 <div class="app">
   <h1>Barcode Scanner</h1>
   <div id="scanner-container"></div>
-  <div class="prompt">
-    <h2>Scan barcode for view result</h2>
+  <div class="prompt" *ngIf="!barcodeValue">
+    <h2>Scan barcode to see result</h2>
   </div>
   <div *ngIf="errorMessage">
     <h2>{{ errorMessage }}</h2>
