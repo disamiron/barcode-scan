@@ -67,7 +67,7 @@ export class AppComponent implements AfterViewInit {
           target: document.querySelector("#scanner-container")!,
         },
         decoder: {
-          readers: ["code_128_reader"],
+          readers: ["ean_reader"],
           multiple: false,
         },
         locate: false,
