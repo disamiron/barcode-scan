@@ -1,13 +1,5 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ViewChild,
-} from "@angular/core";
-import { QuaggaJSResultObject } from "@ericblade/quagga2";
-import { BarcodeScannerLivestreamComponent } from "ngx-barcode-scanner";
+import { AfterViewInit, ChangeDetectorRef, Component } from "@angular/core";
 import Quagga from "@ericblade/quagga2";
-// import { getMainBarcodeScanningCamera } from './camera-access';
 
 @Component({
   selector: "app-root",
@@ -15,21 +7,22 @@ import Quagga from "@ericblade/quagga2";
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent implements AfterViewInit {
-  @ViewChild(BarcodeScannerLivestreamComponent)
-  public barcodeScanner!: BarcodeScannerLivestreamComponent;
+  public title: string = "Barcode Scanner";
+
   public barcodeValue: string | null = null;
+
   public started = false;
 
   public errorMessage: string | null = null;
-  title = "barcode-scan";
+
+  constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
   public ngAfterViewInit() {
     this.initializeScanner();
   }
 
-  constructor(private changeDetectorRef: ChangeDetectorRef) {}
-
   public initializeScanner(): Promise<void> {
+    this.barcodeValue = null;
     if (
       !navigator.mediaDevices ||
       !(typeof navigator.mediaDevices.getUserMedia === "function")
@@ -53,6 +46,7 @@ export class AppComponent implements AfterViewInit {
     preferredDeviceId: string | undefined
   ): Promise<void> {
     const constraints: MediaTrackConstraints = {};
+
     if (preferredDeviceId) {
       constraints.deviceId = preferredDeviceId;
     } else {
@@ -65,18 +59,23 @@ export class AppComponent implements AfterViewInit {
           type: "LiveStream",
           constraints,
           area: {
-            top: "25%", // top offset
-            right: "10%", // right offset
-            left: "10%", // left offset
-            bottom: "25%", // bottom offset
+            top: "25%",
+            right: "10%",
+            left: "10%",
+            bottom: "25%",
           },
-          target: document.querySelector("#scanner-container") ?? undefined,
+          target: document.querySelector("#scanner-container")!,
         },
         decoder: {
-          readers: ["ean_reader"],
+          readers: ["code_128_reader"],
+          debug: {
+            drawBoundingBox: false,
+            showFrequency: false,
+            drawScanline: false,
+            showPattern: false,
+          },
           multiple: false,
         },
-
         locate: false,
       },
       (err) => {
@@ -85,7 +84,6 @@ export class AppComponent implements AfterViewInit {
           this.started = false;
         } else {
           Quagga.start();
-          this.barcodeValue = null;
           this.started = true;
           this.changeDetectorRef.detectChanges();
           Quagga.onDetected((res) => {
