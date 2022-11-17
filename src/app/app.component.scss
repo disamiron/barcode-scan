@@ -1,6 +1,10 @@
 ::ng-deep .drawingBuffer {
   display: none;
 }
+::ng-deep video {
+  width: 100vw;
+  height: 350px;
+}
 .app {
   display: flex;
   flex-direction: column;

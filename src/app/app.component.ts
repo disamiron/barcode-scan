@@ -76,6 +76,7 @@ export class AppComponent implements AfterViewInit {
           readers: ["ean_reader"],
           multiple: false,
         },
+
         locate: false,
       },
       (err) => {
