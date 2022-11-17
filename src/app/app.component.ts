@@ -68,12 +68,6 @@ export class AppComponent implements AfterViewInit {
         },
         decoder: {
           readers: ["code_128_reader"],
-          debug: {
-            drawBoundingBox: false,
-            showFrequency: false,
-            drawScanline: false,
-            showPattern: false,
-          },
           multiple: false,
         },
         locate: false,
