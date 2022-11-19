@@ -4,19 +4,16 @@
   <barcode-scanner-livestream
     type="ean"
     (valueChanges)="onValueChanges($event)"
-    (started)="onStarted()"
+    (started)="barcodeScanStarted()"
   ></barcode-scanner-livestream>
   <div class="prompt" *ngIf="!barcodeValue">
     <h2>Scan barcode to see result</h2>
-  </div>
-  <div *ngIf="errorMessage">
-    <h2>{{ errorMessage }}</h2>
   </div>
   <div *ngIf="barcodeValue">
     <h2>{{ barcodeValue }}</h2>
   </div>
 
   <div class="controls" *ngIf="!started && barcodeValue">
-    <button (click)="initializeScanner()">New Scan</button>
+    <button (click)="newScan()">New Scan</button>
   </div>
 </div>
