@@ -1,6 +1,11 @@
 <div class="app">
   <h1>Barcode Scanner</h1>
-  <div id="scanner-container"></div>
+  <!-- <div id="scanner-container"></div> -->
+  <barcode-scanner-livestream
+    type="ean_reader"
+    (valueChanges)="onValueChanges($event)"
+    (started)="onStarted()"
+  ></barcode-scanner-livestream>
   <div class="prompt" *ngIf="!barcodeValue">
     <h2>Scan barcode to see result</h2>
   </div>

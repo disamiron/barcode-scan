@@ -1,5 +1,11 @@
-import { AfterViewInit, ChangeDetectorRef, Component } from "@angular/core";
-import Quagga from "@ericblade/quagga2";
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ViewChild,
+} from "@angular/core";
+import Quagga, { QuaggaJSResultObject } from "@ericblade/quagga2";
+import { BarcodeScannerLivestreamComponent } from "ngx-barcode-scanner";
 
 @Component({
   selector: "app-root",
@@ -7,6 +13,8 @@ import Quagga from "@ericblade/quagga2";
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent implements AfterViewInit {
+  @ViewChild(BarcodeScannerLivestreamComponent)
+  public barcodeScanner!: BarcodeScannerLivestreamComponent;
   public title: string = "Barcode Scanner";
 
   public barcodeValue: string | null = null;
@@ -18,9 +26,16 @@ export class AppComponent implements AfterViewInit {
   constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
   public ngAfterViewInit() {
-    this.initializeScanner();
+    // this.initializeScanner();
+    this.barcodeScanner.start();
   }
 
+  public onValueChanges(result: QuaggaJSResultObject) {
+    this.barcodeValue = result.codeResult.code;
+  }
+  public onStarted() {
+    console.log("started");
+  }
   public initializeScanner(): Promise<void> {
     this.barcodeValue = null;
     if (
