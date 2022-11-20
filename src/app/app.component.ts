@@ -1,9 +1,5 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ViewChild,
-} from "@angular/core";
+import { AfterViewInit, Component, ViewChild } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { QuaggaJSResultObject } from "@ericblade/quagga2";
 import { BarcodeScannerLivestreamComponent } from "ngx-barcode-scanner";
 
@@ -21,7 +17,13 @@ export class AppComponent implements AfterViewInit {
 
   public started = false;
 
-  constructor(private changeDetectorRef: ChangeDetectorRef) {}
+  public isManuallLogic: boolean = false;
+
+  constructor(private _fb: FormBuilder) {}
+
+  public manuallForm: FormGroup = this._fb.group({
+    barcode: [null, Validators.required],
+  });
 
   public ngAfterViewInit() {
     this.barcodeScanner.start();
@@ -37,7 +39,29 @@ export class AppComponent implements AfterViewInit {
     this.started = true;
   }
 
+  public enterManually() {
+    if (this.isManuallLogic) {
+      this.barcodeScanner.start();
+    } else {
+      this.barcodeScanner.stop();
+    }
+    this.isManuallLogic = !this.isManuallLogic;
+  }
+
   public newScan() {
+    this.barcodeValue = null;
+    this.manuallForm.patchValue({
+      barcode: null,
+    });
     this.barcodeScanner.start();
+  }
+
+  public submit() {
+    if (this.manuallForm.invalid) {
+      return;
+    }
+    this.isManuallLogic = false;
+    this.barcodeValue = this.manuallForm.value.barcode;
+    this.started = false;
   }
 }

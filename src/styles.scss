@@ -5,3 +5,41 @@
 body {
   background-color: rgb(41, 41, 41);
 }
+form {
+  display: flex;
+  flex-direction: column;
+}
+input,
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px rgba(0, 0, 0, 0) inset !important;
+}
+input,
+input:-webkit-autofill {
+  color: rgb(255, 255, 255) !important;
+  font-family: proxima-nova, serif !important;
+  font-size: 16px !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: white;
+}
+input::-webkit-input-placeholder {
+  font-family: Termina-Thin, serif;
+  font-size: 12px;
+}
+:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+input::-moz-placeholder {
+  font-family: Termina-Thin, serif;
+  font-size: 12px;
+}
+:focus::-moz-placeholder {
+  color: transparent;
+}

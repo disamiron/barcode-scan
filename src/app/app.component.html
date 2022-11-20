@@ -6,9 +6,27 @@
     (valueChanges)="onValueChanges($event)"
     (started)="barcodeScanStarted()"
   ></barcode-scanner-livestream>
+
+  <form [formGroup]="manuallForm" *ngIf="isManuallLogic">
+    <mat-form-field appearance="fill" [color]="'white'">
+      <mat-label>Barcode value</mat-label>
+      <input type="number" formControlName="barcode" matInput />
+    </mat-form-field>
+    <button (click)="submit()">Submit</button>
+  </form>
+
   <div class="prompt" *ngIf="!barcodeValue">
-    <h2>Scan barcode to see result</h2>
+    <h2>
+      {{
+        isManuallLogic ? "Enter barcode value" : "Scan barcode to see result"
+      }}
+    </h2>
   </div>
+
+  <div class="prompt alt" *ngIf="!barcodeValue" (click)="enterManually()">
+    <h2>{{ isManuallLogic ? "or scan with camera" : "or enter manually" }}</h2>
+  </div>
+
   <div *ngIf="barcodeValue">
     <h2>{{ barcodeValue }}</h2>
   </div>
