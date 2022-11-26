@@ -1,12 +1,16 @@
 <div class="app">
   <h1>Barcode Scanner</h1>
   <!-- <div id="scanner-container"></div> -->
-  <barcode-scanner-livestream
-    type="ean"
+  <!-- <barcode-scanner-livestream
+    [config]="config"
     (valueChanges)="onValueChanges($event)"
     (started)="barcodeScanStarted()"
-  ></barcode-scanner-livestream>
-
+  ></barcode-scanner-livestream> -->
+  <zxing-scanner
+    [formats]="allowedFormats"
+    [enable]="started"
+    (scanSuccess)="scanSuccessHandler($event)"
+  ></zxing-scanner>
   <form [formGroup]="manuallForm" *ngIf="isManuallLogic">
     <mat-form-field appearance="fill" [color]="'white'">
       <mat-label>Barcode value</mat-label>
@@ -31,7 +35,7 @@
     <h2>{{ barcodeValue }}</h2>
   </div>
 
-  <div class="controls" *ngIf="!started && barcodeValue">
-    <button (click)="newScan()">New Scan</button>
+  <div class="controls" *ngIf="!started && barcodeValue" (click)="newScan()">
+    <button>New Scan</button>
   </div>
 </div>

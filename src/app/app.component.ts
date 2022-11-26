@@ -1,51 +1,42 @@
-import { AfterViewInit, Component, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { QuaggaJSResultObject } from "@ericblade/quagga2";
-import { BarcodeScannerLivestreamComponent } from "ngx-barcode-scanner";
-
+import { BarcodeFormat } from "@zxing/library";
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
 })
-export class AppComponent implements AfterViewInit {
-  @ViewChild(BarcodeScannerLivestreamComponent)
-  public barcodeScanner!: BarcodeScannerLivestreamComponent;
+export class AppComponent {
   public title: string = "Barcode Scanner";
+
+  allowedFormats = [BarcodeFormat.EAN_13];
 
   public barcodeValue: string | null = null;
 
-  public started = false;
+  public started = true;
 
   public isManuallLogic: boolean = false;
 
-  constructor(private _fb: FormBuilder) {}
+  constructor(private _fb: FormBuilder, private _cdr: ChangeDetectorRef) {}
 
   public manuallForm: FormGroup = this._fb.group({
     barcode: [null, Validators.required],
   });
 
-  public ngAfterViewInit() {
-    this.barcodeScanner.start();
-  }
-
-  public onValueChanges(result: QuaggaJSResultObject) {
-    this.barcodeValue = result.codeResult.code;
-    this.barcodeScanner.stop();
-    this.started = false;
-  }
-
-  public barcodeScanStarted() {
-    this.started = true;
-  }
-
   public enterManually() {
     if (this.isManuallLogic) {
-      this.barcodeScanner.start();
+      this.started = true;
     } else {
-      this.barcodeScanner.stop();
+      this.started = false;
     }
     this.isManuallLogic = !this.isManuallLogic;
+  }
+
+  public scanSuccessHandler(e: any) {
+    if (e) {
+      this.started = false;
+      this.barcodeValue = e;
+    }
   }
 
   public newScan() {
@@ -53,7 +44,7 @@ export class AppComponent implements AfterViewInit {
     this.manuallForm.patchValue({
       barcode: null,
     });
-    this.barcodeScanner.start();
+    this.started = true;
   }
 
   public submit() {
