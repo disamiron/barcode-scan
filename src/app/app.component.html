@@ -8,10 +8,19 @@
   ></barcode-scanner-livestream> -->
   <zxing-scanner
     [formats]="allowedFormats"
-    [tryHarder]="true"
+    [tryHarder]="manuallForm.value.tryHarder"
     [enable]="started"
     (scanSuccess)="scanSuccessHandler($event)"
   ></zxing-scanner>
+  <form [formGroup]="manuallForm" *ngIf="!isManuallLogic">
+    <mat-checkbox
+      [checked]="manuallForm.value.tryHarder"
+      (change)="changeTryHarder($event)"
+      color="primary"
+    >
+      Try harder
+    </mat-checkbox>
+  </form>
   <form [formGroup]="manuallForm" *ngIf="isManuallLogic">
     <mat-form-field appearance="fill" [color]="'white'">
       <mat-label>Barcode value</mat-label>
