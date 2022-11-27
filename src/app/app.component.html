@@ -8,6 +8,7 @@
   ></barcode-scanner-livestream> -->
   <zxing-scanner
     [formats]="allowedFormats"
+    [tryHarder]="true"
     [enable]="started"
     (scanSuccess)="scanSuccessHandler($event)"
   ></zxing-scanner>

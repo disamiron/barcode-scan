@@ -1,12 +1,16 @@
 import { ChangeDetectorRef, Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { BarcodeFormat } from "@zxing/library";
+
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
+  // @ViewChild(ZXingScannerComponent)
+  // public zScanner = ZXingScannerComponent!;
+
   public title: string = "Barcode Scanner";
 
   allowedFormats = [BarcodeFormat.EAN_13];
@@ -33,7 +37,7 @@ export class AppComponent {
   }
 
   public scanSuccessHandler(e: any) {
-    if (e) {
+    if (e && e[0] === "4") {
       this.started = false;
       this.barcodeValue = e;
     }
