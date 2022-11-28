@@ -11,11 +11,7 @@ import { BarcodeFormat } from "@zxing/library";
 export class AppComponent {
   public title: string = "Barcode Scanner";
 
-  allowedFormats = [
-    BarcodeFormat.CODE_128,
-    BarcodeFormat.DATA_MATRIX,
-    BarcodeFormat.EAN_13,
-  ];
+  allowedFormats = [BarcodeFormat.EAN_8, BarcodeFormat.EAN_13];
 
   public barcodeValue: string | null = null;
 
@@ -27,7 +23,7 @@ export class AppComponent {
 
   public manuallForm: FormGroup = this._fb.group({
     barcode: [null, Validators.required],
-    tryHarder: [false],
+    tryHarder: [true],
   });
 
   public enterManually() {
